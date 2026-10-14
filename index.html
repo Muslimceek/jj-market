@@ -1,106 +1,420 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#08080b">
-<title>JJ Market — Global Marketplace</title>
-<meta name="description" content="JJ Market объединяет бренды, продавцов и покупателей. Первое направление — Турция и Казахстан.">
-<link rel="icon" href="assets/logo-icon.png"><link rel="stylesheet" href="css/styles.css?v=20260928">
-<script src="js/translations.js" defer></script><script src="js/motion-copy.js" defer></script><script src="js/config.js" defer></script><script src="js/app.js?v=20260928" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JJ Market: товары из Турции с доставкой по Казахстану</title>
+<meta name="description" content="Одежда, обувь, сумки и косметика из Турции в приложении JJ Market. Цены в тенге, оплата через Kaspi, доставка по Казахстану.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f4f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0a10" media="(prefers-color-scheme: dark)">
+<meta name="apple-itunes-app" content="app-id=6768357531">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JJ Market">
+<meta property="og:title" content="JJ Market: товары из Турции с доставкой по Казахстану">
+<meta property="og:description" content="Цены в тенге, оплата через Kaspi, доставка по Казахстану. Скачайте в App Store и Google Play.">
+<meta property="og:image" content="assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/brand/logo-symbol.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/montserrat-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/nunito-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/screens/b-home.webp" as="image" fetchpriority="high">
+<link rel="stylesheet" href="css/styles.css?v=2026101504">
+<script>document.documentElement.classList.add('js')</script>
+<script src="js/i18n.js?v=2026101504" defer></script>
+<script src="js/app.js?v=2026101504" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","name":"JJ Market","email":"support@jjmarket.kz","telephone":"+7 701 027 5004","sameAs":["https://www.instagram.com/jjmarket.kz/"],"contactPoint":{"@type":"ContactPoint","telephone":"+7 701 027 5004","contactType":"customer support","availableLanguage":["ru","kk","tr","en"],"hoursAvailable":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}}},
+{"@type":"MobileApplication","name":"JJ Market KZ","operatingSystem":"iOS, Android","applicationCategory":"ShoppingApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"KZT"},"installUrl":["https://apps.apple.com/app/jj-market-kz/id6768357531","https://play.google.com/store/apps/details?id=com.jjmarket.customer"]},
+{"@type":"MobileApplication","name":"JJ Market Seller","operatingSystem":"iOS, Android","applicationCategory":"BusinessApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"KZT"},"installUrl":["https://apps.apple.com/app/jj-market-seller/id6768510740","https://play.google.com/store/apps/details?id=com.jjmarket.seller"]}
+]}
+</script>
 </head>
 <body>
-<a class="skip" href="#main" data-i18n="ui.skip">К содержимому</a>
-<div class="read-progress" aria-hidden="true"><i></i></div>
-<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
-<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
-<symbol id="arrow-up" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
-<symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6h14M5 18h14"/></symbol>
-<symbol id="box" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9M7.5 5.5l9 5V15"/></symbol>
-<symbol id="people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 4a4 4 0 0 1 0 8m1 3a5 5 0 0 1 4 5"/></symbol>
-<symbol id="layers" viewBox="0 0 24 24"><path d="m12 3 10 6-10 6L2 9l10-6ZM2 13l10 6 10-6M2 17l10 6 10-6"/></symbol>
-<symbol id="spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></symbol>
-<symbol id="instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
-<symbol id="chat" viewBox="0 0 24 24"><path d="M21 11.5a9 9 0 0 1-13 8L3 21l1.5-5A9 9 0 1 1 21 11.5Z"/><path d="M8 8c0 4 4 8 8 8l1-3-3-1-1 1-2-2 1-1-1-3-3 1Z"/></symbol>
-<symbol id="phone" viewBox="0 0 24 24"><path d="M7 3H3C2 13 11 22 21 21v-4l-5-2-2 2-7-7 2-2-2-5Z"/></symbol>
-<symbol id="mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></symbol>
-<symbol id="download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
-<symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
-</defs></svg>
+<a class="skip" href="#main" data-i18n="ui.skip">Перейти к содержимому</a>
+
+<!-- Ambient light the glass refracts. Fixed, non-interactive, one layer. -->
+<div class="ambient" aria-hidden="true"><i class="orb orb-a"></i><i class="orb orb-b"></i><i class="orb orb-c"></i></div>
+<div class="top-sentinel" aria-hidden="true"></div>
+
 <header class="header" id="header">
-<a class="brand" href="#top" aria-label="JJ Market"><img src="assets/logo-full-white.png" width="130" height="47" alt="JJ MARKET"></a>
-<nav class="nav" aria-label="Navigation"><a href="#about" data-i18n="nav.about">О компании</a><a href="#how" data-i18n="nav.how">Как это работает</a><a href="#app" data-i18n="app.eyebrow">Приложение</a><a href="#contact" data-i18n="nav.contact">Контакты</a></nav>
-<div class="header-actions"><button class="motion-toggle" type="button" id="motionToggle" aria-pressed="false" aria-label="Остановить анимацию"><span class="pause-bars" aria-hidden="true"></span></button><div class="language"><button class="lang-trigger" type="button" aria-expanded="false" aria-controls="language-menu" id="langTrigger"><span class="lang-code">RU</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button><div id="language-menu" class="language-menu" hidden><button data-lang="ru">Русский <span>RU</span></button><button data-lang="tr">Türkçe <span>TR</span></button><button data-lang="kk">Қазақша <span>KZ</span></button><button data-lang="uz">O‘zbekcha <span>UZ</span></button><button data-lang="ky">Кыргызча <span>KG</span></button></div></div><a href="#contact" class="header-contact"><svg class="icon"><use href="#arrow-up"/></svg><span class="sr-only" data-i18n="nav.contact">Контакты</span></a></div>
+  <div class="header-bar glass lens" data-specular>
+    <a class="brand" href="#top" aria-label="JJ Market">
+      <svg class="brand-symbol" aria-hidden="true"><use href="assets/icons.svg#logo-symbol"/></svg>
+      <svg class="brand-word" aria-hidden="true"><use href="assets/icons.svg#logo-word"/></svg>
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#how" data-i18n="nav.how">Как заказать</a>
+      <a href="#why" data-i18n="nav.why">Преимущества</a>
+      <a href="#sellers" data-i18n="nav.sellers">Продавцам</a>
+      <a href="#faq" data-i18n="nav.faq">Вопросы</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-trigger" type="button" id="langTrigger" aria-expanded="false" aria-controls="langMenu" aria-haspopup="true">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-translate"/></svg>
+        <span class="lang-code">RU</span>
+      </button>
+      <a class="btn btn-primary btn-sm" href="#download" data-smart-download data-track="header_download">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-device-mobile"/></svg>
+        <span data-i18n="nav.download">Скачать</span>
+      </a>
+    </div>
+  </div>
+  <!-- Outside the bar on purpose: a glass layer nested in another glass layer cannot see the page behind it. -->
+  <div class="lang-menu glass lens" id="langMenu" role="menu" hidden>
+    <button type="button" role="menuitemradio" data-lang="ru">Русский</button>
+    <button type="button" role="menuitemradio" data-lang="kk">Қазақша</button>
+    <button type="button" role="menuitemradio" data-lang="tr">Türkçe</button>
+    <button type="button" role="menuitemradio" data-lang="uz">O‘zbekcha</button>
+    <button type="button" role="menuitemradio" data-lang="ky">Кыргызча</button>
+  </div>
 </header>
+
 <main id="main">
+
+<!-- HERO -->
 <section class="hero" id="top">
-<div class="hero-grid" aria-hidden="true"></div>
-<div class="hero-copy">
-<div class="eyebrow entrance"><span class="signal"></span> GLOBAL MARKETPLACE</div>
-<h1 class="hero-title"><span class="title-line"><span data-i18n="motion.hero1">Мир ближе.</span></span><span class="title-line accent"><span data-i18n="motion.hero2">С JJ Market.</span></span></h1>
-<p class="hero-description entrance" data-i18n="motion.heroText">Бренды, продавцы и покупатели — в одной платформе. Открываем новые возможности для международных покупок.</p>
-<div class="hero-actions entrance"><a class="button primary" data-link="appstore" href="https://apps.apple.com/tr/app/jj-market-seller/id6768510740?l=tr"><span data-i18n="final.ctaPrimary">Открыть JJ Market</span><svg class="icon"><use href="#arrow-up"/></svg></a><a class="button text-button" href="#how"><span data-i18n="nav.how">Как это работает</span><span class="round-arrow">↓</span></a></div>
-<div class="direction-note entrance"><span class="country-code">TR</span><i></i><span class="country-code">KZ</span><span data-i18n="motion.firstDirection">Наше первое направление</span></div>
-</div>
-<div class="hero-art" aria-hidden="true">
-<div class="globe-halo"></div><canvas id="globeCanvas"></canvas>
-<div class="orbital-ring ring-one"></div><div class="orbital-ring ring-two"></div>
-<div class="world-mark"><div class="world-mark-inner"><img src="assets/logo-icon-white.png" alt="" width="100" height="120"><span>JJ MARKET</span></div></div>
-<div class="satellite satellite-tr"><span class="satellite-dot"></span><div><small>01 / TR</small><strong data-i18n="motion.turkey">Турция</strong></div><svg class="icon"><use href="#arrow-up"/></svg></div>
-<div class="satellite satellite-kz"><span class="satellite-dot"></span><div><small>02 / KZ</small><strong data-i18n="motion.kazakhstan">Казахстан</strong></div><svg class="icon"><use href="#arrow-up"/></svg></div>
-<div class="world-caption">BRANDS <i>×</i> SELLERS <i>×</i> CUSTOMERS</div>
-</div>
-<a class="scroll-cue" href="#about"><span class="scroll-line"></span><span data-i18n="motion.scroll">Листайте — знакомьтесь</span><span>↓</span></a>
-<div class="hero-index">JJ / 01</div>
+  <div class="hero-copy">
+    <p class="chip glass load" style="--d:0">
+      <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-airplane-tilt"/></svg>
+      <span data-i18n="hero.chip">Турция → Казахстан</span>
+    </p>
+    <h1 class="hero-title">
+      <span class="line"><span class="load" style="--d:1" data-i18n="hero.title1">Из Стамбула</span></span>
+      <span class="line accent"><span class="load" style="--d:2" data-i18n="hero.title2">к вашей двери.</span></span>
+    </h1>
+    <p class="hero-text load" style="--d:3" data-i18n="hero.text">Одежда, обувь, сумки и косметика из Турции в одном приложении. Цены в тенге, оплата через Kaspi.</p>
+    <div class="stores load" style="--d:4">
+      <a class="store store-ios" href="https://apps.apple.com/app/jj-market-kz/id6768357531" target="_blank" rel="noopener" data-track="hero_appstore">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-apple-logo"/></svg>
+        <span><small data-i18n="store.ios">Загрузите в</small><b>App Store</b></span>
+      </a>
+      <a class="store store-android" href="https://play.google.com/store/apps/details?id=com.jjmarket.customer&amp;pcampaignid=web_share" target="_blank" rel="noopener" data-track="hero_googleplay">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-google-play-logo"/></svg>
+        <span><small data-i18n="store.android">Доступно в</small><b>Google Play</b></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stage" aria-hidden="true">
+    <div class="stage-glow"></div>
+    <div class="depth" style="--z:1.6"><img class="obj obj-bags pop" style="--d:6" src="assets/3d/shopping-bags.webp" alt="" width="192" height="192"></div>
+    <div class="depth" style="--z:1.2"><img class="obj obj-box pop" style="--d:8" src="assets/3d/package.webp" alt="" width="192" height="192"></div>
+    <div class="depth" style="--z:2"><img class="obj obj-mosque pop" style="--d:7" src="assets/3d/mosque.webp" alt="" width="192" height="192"></div>
+
+    <div class="depth phone-depth" style="--z:.6">
+      <div class="phone-tilt">
+        <div class="phone hero-phone rise">
+          <div class="phone-screen">
+            <img src="assets/screens/b-home.webp" width="750" height="1622" alt="" fetchpriority="high">
+            <div class="status"><span>9:41</span><span class="status-icons"><svg class="i"><use href="assets/icons.svg#i-cell-signal-full"/></svg><svg class="i"><use href="assets/icons.svg#i-wifi-high"/></svg><svg class="i"><use href="assets/icons.svg#i-battery-full"/></svg></span></div>
+          </div>
+          <i class="island"></i><i class="glare"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="depth" style="--z:1.4">
+      <div class="float-card card-product glass lens materialize" style="--d:9" data-specular>
+        <img src="assets/photo-loafers-thumb.webp" width="240" height="232" alt="">
+        <div>
+          <b>Лоферы</b>
+          <small>missmamma</small>
+          <strong>15 467 ₸</strong>
+          <em class="stock" data-i18n="hero.instock">В наличии</em>
+        </div>
+        <span class="heart"><svg class="i"><use href="assets/icons.svg#i-heart"/></svg></span>
+      </div>
+    </div>
+    <div class="depth" style="--z:1.8">
+      <div class="float-card card-pay glass lens materialize" style="--d:11" data-specular>
+        <span class="tile"><svg class="i"><use href="assets/icons.svg#i-credit-card"/></svg></span>
+        <span data-i18n="hero.kaspi">Оплата через Kaspi Pay</span>
+        <svg class="i check"><use href="assets/icons.svg#i-check"/></svg>
+      </div>
+    </div>
+    <div class="depth" style="--z:1.1">
+      <div class="float-card card-route glass lens materialize" style="--d:12" data-specular>
+        <svg class="mini-route" viewBox="0 0 200 60"><path class="mr-base" d="M10 48 C 60 4, 140 4, 190 48"/><path class="mr-draw" d="M10 48 C 60 4, 140 4, 190 48" pathLength="1"/><circle cx="10" cy="48" r="4"/><circle cx="190" cy="48" r="4"/></svg>
+        <span class="mini-plane"><svg class="i"><use href="assets/icons.svg#i-airplane-tilt"/></svg></span>
+        <span class="route-label" data-i18n="hero.route">Стамбул → Казахстан</span>
+      </div>
+    </div>
+    <div class="depth" style="--z:2.2">
+      <div class="app-icon materialize" style="--d:10"><img src="assets/app/icon-buyer.webp" width="256" height="256" alt=""></div>
+    </div>
+  </div>
 </section>
-<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>BRANDS</span><i>✳</i><span>PEOPLE</span><i>✳</i><span>MARKETS</span><i>✳</i><span>CONNECTED</span><i>✳</i><span>BRANDS</span><i>✳</i><span>PEOPLE</span><i>✳</i><span>MARKETS</span><i>✳</i><span>CONNECTED</span><i>✳</i></div></div>
-<section class="section about light-section" id="about">
-<div class="section-top reveal"><span class="eyebrow" data-i18n="about.eyebrow">О компании</span><span class="section-number">01 — ECOSYSTEM</span></div>
-<div class="section-heading"><h2 class="reveal" data-i18n="motion.aboutTitle">Разные стороны.<br>Одна платформа.</h2><p class="reveal" data-i18n="about.p1">JJ Market — это современная marketplace-платформа, которая соединяет продавцов, бренды и покупателей в одном цифровом пространстве.</p></div>
-<div class="ecosystem-cards">
-<article class="ecosystem-card reveal tilt-card"><div class="card-art art-brands" aria-hidden="true"><div class="cube cube-one"><svg class="icon"><use href="#box"/></svg></div><div class="cube cube-two"><svg class="icon"><use href="#spark"/></svg></div><div class="cube cube-three"><img src="assets/logo-icon.png" alt=""></div><span class="art-orbit"></span></div><span class="card-kicker">01 / BRANDS</span><h3 data-i18n="motion.brands">Для брендов</h3><p data-i18n="motion.brandsText">Новые возможности для ваших предложений.</p><span class="corner-cross">+</span></article>
-<article class="ecosystem-card reveal tilt-card"><div class="card-art art-sellers" aria-hidden="true"><div class="stack-sheet sheet-back"></div><div class="stack-sheet sheet-middle"></div><div class="stack-sheet sheet-front"><svg class="icon"><use href="#arrow-up"/></svg><span>TR → KZ</span></div></div><span class="card-kicker">02 / SELLERS</span><h3 data-i18n="motion.sellers">Для продавцов</h3><p data-i18n="motion.sellersText">Выход на новые рынки через единую платформу.</p><span class="corner-cross">+</span></article>
-<article class="ecosystem-card reveal tilt-card"><div class="card-art art-people" aria-hidden="true"><div class="people-orbit"></div><span class="person person-a"><svg class="icon"><use href="#people"/></svg></span><span class="person person-b"><svg class="icon"><use href="#spark"/></svg></span><span class="person person-c"><svg class="icon"><use href="#box"/></svg></span><div class="people-center"><img src="assets/logo-icon-white.png" alt=""></div></div><span class="card-kicker">03 / CUSTOMERS</span><h3 data-i18n="motion.customers">Для покупателей</h3><p data-i18n="motion.customersText">Находите нужное у продавцов из других стран.</p><span class="corner-cross">+</span></article>
-</div>
+
+<!-- CATEGORIES MARQUEE (the page's only marquee) -->
+<section class="cats" aria-label="Категории">
+  <div class="marquee" data-marquee>
+    <ul class="marquee-track">
+      <li class="pill glass"><img src="assets/3d/dress.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.1">Женская одежда</span></li>
+      <li class="pill glass"><img src="assets/3d/coat.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.2">Мужская одежда</span></li>
+      <li class="pill glass"><img src="assets/3d/teddy.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.3">Детская одежда</span></li>
+      <li class="pill glass"><img src="assets/3d/running-shoe.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.4">Обувь</span></li>
+      <li class="pill glass"><img src="assets/3d/handbag.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.5">Сумки и аксессуары</span></li>
+      <li class="pill glass"><img src="assets/3d/lipstick.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.6">Красота и уход</span></li>
+      <li class="pill glass"><img src="assets/3d/sparkles.webp" alt="" width="48" height="48" loading="lazy"><span data-i18n="cat.7">БАДы и витамины</span></li>
+    </ul>
+  </div>
+  <button class="motion-toggle glass" type="button" id="motionToggle" aria-pressed="false" data-i18n-aria="ui.pause" aria-label="Остановить анимацию">
+    <svg class="i i-pause" aria-hidden="true"><use href="assets/icons.svg#i-pause"/></svg>
+    <svg class="i i-play" aria-hidden="true"><use href="assets/icons.svg#i-play"/></svg>
+  </button>
 </section>
-<section class="how-section" id="how">
-<div class="how-sticky section">
-<div class="section-top reveal"><span class="eyebrow" data-i18n="how.eyebrow">Процесс</span><span class="section-number">02 — HOW IT WORKS</span></div>
-<div class="how-layout"><div class="how-copy"><h2 class="reveal" data-i18n="motion.howTitle">От предложения<br>до возможности.</h2><p class="section-description reveal" data-i18n="motion.howIntro">Один маршрут, который связывает всех участников.</p><div class="step-buttons" role="tablist" aria-label="Как работает JJ Market">
-<button class="step active" role="tab" id="step-0" aria-controls="step-panel" aria-selected="true" data-step="0"><span>01</span><div><strong data-i18n="how.step1Title">Продавцы</strong><p data-i18n="how.step1Text">Бренды и продавцы размещают свои предложения на платформе.</p></div><svg class="icon"><use href="#arrow-up"/></svg></button>
-<button class="step" role="tab" id="step-1" aria-controls="step-panel" aria-selected="false" tabindex="-1" data-step="1"><span>02</span><div><strong data-i18n="how.step2Title">JJ Market</strong><p data-i18n="how.step2Text">Мы объединяем предложения в одном удобном цифровом пространстве.</p></div><svg class="icon"><use href="#arrow-up"/></svg></button>
-<button class="step" role="tab" id="step-2" aria-controls="step-panel" aria-selected="false" tabindex="-1" data-step="2"><span>03</span><div><strong data-i18n="how.step3Title">Покупатели</strong><p data-i18n="how.step3Text">Пользователи находят нужные товары и взаимодействуют с продавцами.</p></div><svg class="icon"><use href="#arrow-up"/></svg></button>
-<button class="step" role="tab" id="step-3" aria-controls="step-panel" aria-selected="false" tabindex="-1" data-step="3"><span>04</span><div><strong data-i18n="how.step4Title">Международное развитие</strong><p data-i18n="how.step4Text">Платформа создаётся для соединения рынков разных стран.</p></div><svg class="icon"><use href="#arrow-up"/></svg></button>
-</div></div>
-<div class="process-stage reveal" id="step-panel" role="tabpanel" aria-labelledby="step-0" data-phase="0"><div class="stage-grid" aria-hidden="true"></div><div class="stage-orbit orbit-a" aria-hidden="true"></div><div class="stage-orbit orbit-b" aria-hidden="true"></div><div class="stage-top"><span>JJ MARKET / ECOSYSTEM</span><span class="stage-counter">01 / 04</span></div><div class="network-object"><div class="network-core"><img src="assets/logo-icon-white.png" width="64" height="76" alt="JJ Market"></div><svg class="network-lines" viewBox="0 0 500 440" aria-hidden="true"><path d="M80 115 250 220 420 115M80 330l170-110 170 110"/><path class="network-pulse" d="M80 115 250 220 420 115M80 330l170-110 170 110"/></svg><div class="network-node node-a"><svg class="icon"><use href="#box"/></svg><span data-i18n="how.step1Title">Продавцы</span></div><div class="network-node node-b"><svg class="icon"><use href="#people"/></svg><span data-i18n="how.step3Title">Покупатели</span></div><div class="network-node node-c"><svg class="icon"><use href="#spark"/></svg><span data-i18n="motion.brandsShort">Бренды</span></div><div class="network-node node-d"><svg class="icon"><use href="#globe"/></svg><span data-i18n="motion.markets">Рынки</span></div></div><div class="stage-bottom"><span class="signal"></span><span class="stage-caption" data-i18n="motion.phase0">Всё начинается с предложения</span><div class="stage-meter"><i></i></div></div></div>
-</div>
-</div>
+
+<!-- HOW TO ORDER: sticky phone, steps drive the screen -->
+<section class="how section" id="how">
+  <div class="how-head">
+    <h2 class="title" data-i18n="how.title">Заказ из Турции
+в четыре касания.</h2>
+    <p class="lead reveal" data-i18n="how.text">Без переписок с продавцами и переводов на карту. Всё внутри приложения.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-device" aria-hidden="true">
+      <div class="phone how-phone">
+        <div class="phone-screen" id="howScreens">
+          <img class="screen is-active" src="assets/screens/b-home.webp" width="750" height="1622" alt="" loading="lazy">
+          <img class="screen" src="assets/screens/b-product.webp" width="750" height="1622" alt="" loading="lazy" data-status="light">
+          <img class="screen" src="assets/screens/b-cart.webp" width="750" height="1622" alt="" loading="lazy">
+          <img class="screen" src="assets/screens/b-kaspi.webp" width="750" height="1622" alt="" loading="lazy" data-status="light">
+          <div class="status"><span>9:41</span><span class="status-icons"><svg class="i"><use href="assets/icons.svg#i-cell-signal-full"/></svg><svg class="i"><use href="assets/icons.svg#i-wifi-high"/></svg><svg class="i"><use href="assets/icons.svg#i-battery-full"/></svg></span></div>
+        </div>
+        <i class="island"></i><i class="glare"></i>
+      </div>
+      <div class="how-orbit"></div>
+    </div>
+    <ol class="steps" id="steps">
+      <li class="step glass" data-step="0" data-specular>
+        <span class="step-icon"><img src="assets/3d/search.webp" alt="" width="128" height="128" loading="lazy"></span>
+        <h3 data-i18n="how.s1t">Найдите</h3>
+        <p data-i18n="how.s1d">Каталог турецких магазинов, поиск по названию или артикулу и удобные фильтры.</p>
+        <img class="step-shot" src="assets/screens/b-home.webp" width="750" height="1622" alt="Экран каталога JJ Market" data-i18n-alt="how.alt1" loading="lazy">
+      </li>
+      <li class="step glass" data-step="1" data-specular>
+        <span class="step-icon"><img src="assets/3d/cart.webp" alt="" width="128" height="128" loading="lazy"></span>
+        <h3 data-i18n="how.s2t">Добавьте в корзину</h3>
+        <p data-i18n="how.s2d">Фото, цена в тенге и наличие на одном экране. Выберите количество и добавьте.</p>
+        <img class="step-shot" style="object-position:50% 100%" src="assets/screens/b-product.webp" width="750" height="1622" alt="Добавление товара в корзину" data-i18n-alt="how.alt2" loading="lazy">
+      </li>
+      <li class="step glass" data-step="2" data-specular>
+        <span class="step-icon"><img src="assets/3d/house.webp" alt="" width="128" height="128" loading="lazy"></span>
+        <h3 data-i18n="how.s3t">Оформите заказ</h3>
+        <p data-i18n="how.s3d">Укажите адрес доставки в Казахстане и проверьте итоговую сумму.</p>
+        <img class="step-shot" src="assets/screens/b-cart.webp" width="750" height="1622" alt="Корзина с оплатой Kaspi Pay" data-i18n-alt="how.alt3" loading="lazy">
+      </li>
+      <li class="step glass" data-step="3" data-specular>
+        <span class="step-icon"><img src="assets/3d/credit-card.webp" alt="" width="128" height="128" loading="lazy"></span>
+        <h3 data-i18n="how.s4t">Оплатите в Kaspi</h3>
+        <p data-i18n="how.s4d">Подтвердите оплату в приложении Kaspi, и заказ подтвердится автоматически.</p>
+        <img class="step-shot" style="object-position:50% 78%" src="assets/screens/b-kaspi.webp" width="750" height="1622" alt="Оплата заказа через Kaspi Pay" data-i18n-alt="how.alt4" loading="lazy">
+      </li>
+    </ol>
+  </div>
 </section>
-<section class="route-section section" id="direction">
-<div class="route-grid" aria-hidden="true"></div><div class="section-top reveal"><span class="eyebrow" data-i18n="motion.firstDirection">Наше первое направление</span><span class="section-number">03 — CONNECTION</span></div>
-<div class="route-head reveal"><h2><span data-i18n="motion.turkey">Турция</span><span class="route-times">×</span><span data-i18n="motion.kazakhstan">Казахстан</span></h2><p data-i18n="bridge.text">Мы создаём цифровой мост между турецкими продавцами и покупателями в Казахстане.</p></div>
-<div class="route-visual" aria-hidden="true"><span class="route-code code-tr">TR</span><span class="route-code code-kz">KZ</span><svg viewBox="0 0 1000 280" class="route-svg"><path class="route-base" d="M110 195C320-20 660-20 890 195"/><path class="route-draw" d="M110 195C320-20 660-20 890 195" pathLength="1"/><path class="route-travel" d="M110 195C320-20 660-20 890 195"/><circle cx="110" cy="195" r="7"/><circle cx="890" cy="195" r="7"/></svg><div class="route-brand"><img src="assets/logo-icon-white.png" width="50" height="62" alt=""></div><div class="route-location location-tr"><i></i><span>TÜRKİYE</span></div><div class="route-location location-kz"><i></i><span>QAZAQSTAN</span></div></div>
-<div class="route-footer reveal"><span data-i18n="expansion.title">И это только начало</span><p data-i18n="expansion.text">JJ Market создаётся как международная платформа, способная соединять рынки разных стран.</p><svg class="icon"><use href="#arrow-up"/></svg></div>
+
+<!-- WHY: bento, six cells for six facts -->
+<section class="why section" id="why">
+  <h2 class="title" data-i18n="why.title">Всё привычное.
+Только из Турции.</h2>
+  <div class="bento">
+    <article class="cell cell-price reveal" style="--i:0">
+      <img class="cell-photo" src="assets/photo-loafers.webp" width="911" height="880" alt="Лоферы missmamma из каталога JJ Market" loading="lazy">
+      <div class="price-tag glass lens" data-specular>
+        <small>Лоферы, missmamma</small>
+        <strong data-count="15467">15 467 ₸</strong>
+      </div>
+      <div class="cell-copy">
+        <h3 data-i18n="why.priceT">Цены в тенге</h3>
+        <p data-i18n="why.priceD">Не нужно пересчитывать лиры. Цена сразу в ₸.</p>
+      </div>
+    </article>
+    <article class="cell cell-kaspi glass reveal" style="--i:1" data-specular>
+      <img class="cell-3d" src="assets/3d/credit-card.webp" alt="" width="192" height="192" loading="lazy">
+      <h3 data-i18n="why.kaspiT">Оплата через Kaspi</h3>
+      <p data-i18n="why.kaspiD">Привычный способ оплаты. Заказ подтверждается автоматически.</p>
+    </article>
+    <article class="cell cell-delivery glass reveal" style="--i:2" data-specular>
+      <img class="cell-3d" src="assets/3d/truck.webp" alt="" width="192" height="192" loading="lazy">
+      <h3 data-i18n="why.deliveryT">Доставка по Казахстану</h3>
+      <p data-i18n="why.deliveryD">Укажите адрес, и заказ приедет к вам.</p>
+    </article>
+    <article class="cell cell-fav glass reveal" style="--i:3" data-specular>
+      <img class="cell-3d" src="assets/3d/heart.webp" alt="" width="192" height="192" loading="lazy">
+      <h3 data-i18n="why.favT">Избранное и фильтры</h3>
+      <p data-i18n="why.favD">Сохраняйте понравившееся, ищите по категории, цене и скидкам.</p>
+    </article>
+    <article class="cell cell-lang glass reveal" style="--i:4" data-specular>
+      <div>
+        <h3 data-i18n="why.langT">На вашем языке</h3>
+        <p data-i18n="why.langD">Русский, казахский, турецкий и английский.</p>
+      </div>
+      <ul class="lang-pills" aria-hidden="true"><li>Русский</li><li>Қазақша</li><li>Türkçe</li><li>English</li></ul>
+    </article>
+    <article class="cell cell-support reveal" style="--i:5">
+      <div>
+        <h3 data-i18n="why.supportT">Поддержка рядом</h3>
+        <p data-i18n="why.supportD">WhatsApp и телефон, пн-пт 09:00-18:00.</p>
+      </div>
+      <a class="btn btn-light" href="https://wa.me/77010275004" target="_blank" rel="noopener" data-track="why_whatsapp">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"/></svg>
+        <span data-i18n="contact.whatsapp">Написать в WhatsApp</span>
+      </a>
+    </article>
+  </div>
 </section>
-<section class="section app-section light-section" id="app"><div class="section-top reveal"><span class="eyebrow" data-i18n="app.eyebrow">Приложение</span><span class="section-number">04 — IN YOUR HANDS</span></div><div class="app-layout"><div class="app-copy"><h2 class="reveal" data-i18n="motion.appTitle">Большой мир.<br>В вашем телефоне.</h2><p class="section-description reveal" data-i18n="app.text">Открывайте платформу через мобильное приложение и получайте доступ к экосистеме JJ Market.</p><a class="button dark-button reveal" data-link="appstore" href="https://apps.apple.com/tr/app/jj-market-seller/id6768510740?l=tr"><svg class="icon"><use href="#download"/></svg><span data-i18n="motion.download">Скачать в App Store</span><svg class="icon"><use href="#arrow-up"/></svg></a><div class="app-switch reveal" role="group" aria-label="Экраны приложения"><button class="active" data-screen="home" aria-pressed="true" data-i18n="motion.home">Главная</button><button data-screen="categories" aria-pressed="false" data-i18n="motion.categories">Категории</button></div><p class="app-caption reveal" data-i18n="motion.realApp">Настоящий интерфейс JJ Market</p></div><div class="phone-scene reveal"><div class="phone-orbit orbit-one"></div><div class="phone-orbit orbit-two"></div><span class="phone-label label-a" aria-hidden="true">JJ / MOBILE</span><span class="phone-label label-b" aria-hidden="true">TR → KZ</span><div class="phone-parallax"><div class="phone-shell"><div class="phone-screen"><img id="appScreenshot" src="assets/app-home.webp" width="924" height="2000" alt="Главный экран приложения JJ Market" loading="lazy"></div><div class="phone-rim"></div></div></div><div class="phone-shadow"></div></div></div></section>
-<section class="section benefits-section"><div class="section-top reveal"><span class="eyebrow" data-i18n="why.eyebrow">Преимущества</span><span class="section-number">05 — BUILT TO CONNECT</span></div><h2 class="reveal" data-i18n="motion.whyTitle">Создано, чтобы<br>объединять.</h2><div class="benefit-grid">
-<article class="benefit reveal"><div class="mini-graphic mini-connected" aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="card-kicker">CONNECTED</span><h3 data-i18n="why.card1Title">Единая платформа</h3><p data-i18n="why.card1Text">Всё необходимое — в одном цифровом пространстве.</p></article>
-<article class="benefit reveal"><div class="mini-graphic mini-globe" aria-hidden="true"><svg class="icon"><use href="#globe"/></svg></div><span class="card-kicker">GLOBAL</span><h3 data-i18n="why.card2Title">Международный рынок</h3><p data-i18n="why.card2Text">Соединяем продавцов и покупателей из разных стран.</p></article>
-<article class="benefit reveal"><div class="mini-graphic mini-digital" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><span class="card-kicker">DIGITAL</span><h3 data-i18n="why.card3Title">Современный подход</h3><p data-i18n="why.card3Text">Простой, понятный и удобный digital experience.</p></article>
-<article class="benefit reveal"><div class="mini-graphic mini-growth" aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="card-kicker">SCALABLE</span><h3 data-i18n="why.card4Title">Развитие</h3><p data-i18n="why.card4Text">Начинаем с Турции и Казахстана и развиваем международную платформу.</p></article>
-</div></section>
-<section class="mission section" id="mission"><div class="mission-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="eyebrow reveal" data-i18n="nav.mission">Миссия</span><div class="mission-lines"><p data-i18n="mission.line1">Соединяем рынки.</p><p data-i18n="mission.line2">Упрощаем покупки.</p><p data-i18n="mission.line3">Создаём возможности.</p></div><p class="mission-note reveal" data-i18n="mission.text">Наша цель — сделать международную торговлю проще, понятнее и доступнее для бизнеса и покупателей.</p></section>
-<section class="section contact-section" id="contact"><div class="section-top reveal"><span class="eyebrow" data-i18n="contact.eyebrow">Контакты</span><span class="section-number">06 — LET’S CONNECT</span></div><div class="contact-layout"><div><h2 class="reveal" data-i18n="motion.contactTitle">На связи.<br>В один клик.</h2><p class="section-description reveal" data-i18n="whatsappBlock.text">Ответим на ваши вопросы и поможем разобраться с JJ Market.</p><div class="contact-sculpture reveal" aria-hidden="true"><div class="sculpture-orbit"></div><div class="sculpture-mark"><img src="assets/logo-icon-white.png" alt=""></div><span>LET’S CONNECT</span></div></div><div class="contact-links">
-<a class="contact-link featured reveal" data-link="whatsapp" href="#contact"><span class="contact-icon"><svg class="icon"><use href="#chat"/></svg></span><div><strong>WhatsApp</strong><span data-i18n="contact.whatsappText">Написать в WhatsApp</span></div><svg class="icon"><use href="#arrow-up"/></svg></a>
-<a class="contact-link reveal" data-link="instagram" href="https://www.instagram.com/jjmarket.kz/"><span class="contact-icon"><svg class="icon"><use href="#instagram"/></svg></span><div><strong>Instagram</strong><span>@jjmarket.kz</span></div><svg class="icon"><use href="#arrow-up"/></svg></a>
-<a class="contact-link reveal" data-link="phone" href="#contact"><span class="contact-icon"><svg class="icon"><use href="#phone"/></svg></span><div><strong data-i18n="contact.phoneTitle">Телефон</strong><span data-i18n="contact.phoneText">Позвонить нам</span></div><svg class="icon"><use href="#arrow-up"/></svg></a>
-<a class="contact-link reveal" data-link="appstore" href="https://apps.apple.com/tr/app/jj-market-seller/id6768510740?l=tr"><span class="contact-icon"><svg class="icon"><use href="#download"/></svg></span><div><strong>App Store</strong><span data-i18n="app.cta">Открыть приложение</span></div><svg class="icon"><use href="#arrow-up"/></svg></a>
-<a class="contact-link reveal" data-link="email" href="#contact"><span class="contact-icon"><svg class="icon"><use href="#mail"/></svg></span><div><strong>Email</strong><span data-i18n="contact.emailText">Написать нам</span></div><svg class="icon"><use href="#arrow-up"/></svg></a>
-<p class="official-note reveal"><svg class="icon"><use href="#check"/></svg><span data-i18n="trust.title">Официальные каналы</span></p></div></div></section>
-<section class="section faq-section" id="faq"><div class="faq-layout"><div class="reveal"><span class="eyebrow">FAQ</span><h2 data-i18n="motion.faqTitle">Всё, что<br>важно знать.</h2></div><div class="faq-list" id="faqList"></div></div></section>
-<section class="final-section section"><div class="final-orbit" aria-hidden="true"></div><span class="eyebrow reveal">JJ MARKET / GLOBAL MARKETPLACE</span><h2 class="reveal" data-i18n="motion.finalTitle">Ваш следующий<br>шаг — в JJ Market.</h2><div class="final-actions reveal"><a class="button primary" data-link="appstore" href="https://apps.apple.com/tr/app/jj-market-seller/id6768510740?l=tr"><span data-i18n="final.ctaPrimary">Открыть JJ Market</span><svg class="icon"><use href="#arrow-up"/></svg></a><a class="button secondary" href="#contact" data-i18n="final.ctaSecondary">Связаться с нами</a></div></section>
+
+<!-- ROUTE: motion graphic, dotted globe with the Istanbul to Kazakhstan arc -->
+<section class="route" id="route">
+  <div class="route-panel reveal">
+    <div class="route-copy">
+      <h2 class="title" data-i18n="route.title">Магазины Стамбула
+в вашем телефоне.</h2>
+      <p data-i18n="route.text">JJ Market соединяет продавцов из Турции и покупателей из Казахстана в одном приложении.</p>
+    </div>
+    <div class="globe-wrap" aria-hidden="true">
+      <canvas id="globe"></canvas>
+      <span class="geo geo-from glass" id="geoFrom"><img src="assets/3d/mosque.webp" alt="" width="36" height="36" loading="lazy"><span data-i18n="route.from">Стамбул</span></span>
+      <span class="geo geo-to glass" id="geoTo"><img src="assets/3d/pin.webp" alt="" width="36" height="36" loading="lazy"><span data-i18n="route.to">Казахстан</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- SELLERS -->
+<section class="sellers section" id="sellers">
+  <div class="sellers-grid">
+    <div class="sellers-copy">
+      <p class="eyebrow reveal"><img src="assets/app/icon-seller.webp" width="28" height="28" alt="">JJ Market Seller</p>
+      <h2 class="title" data-i18n="sellers.title">Продаёте в Турции?
+Выходите в Казахстан.</h2>
+      <p class="lead reveal" data-i18n="sellers.text">JJ Market Seller: товары, заказы и продажи в телефоне. Зарегистрируйте магазин за пару минут.</p>
+      <ul class="features">
+        <li class="feature reveal" style="--i:0"><img class="f-icon" src="assets/3d/label.webp" alt="" width="128" height="128" loading="lazy"><div><b data-i18n="sellers.f1t">Товар за пару минут</b><span data-i18n="sellers.f1d">До 10 фото, видео и варианты в одной карточке.</span></div></li>
+        <li class="feature reveal" style="--i:1"><img class="f-icon" src="assets/3d/package.webp" alt="" width="128" height="128" loading="lazy"><div><b data-i18n="sellers.f2t">Розница и опт</b><span data-i18n="sellers.f2d">Тип продажи настраивается для каждого товара.</span></div></li>
+        <li class="feature reveal" style="--i:2"><img class="f-icon" src="assets/3d/coin.webp" alt="" width="128" height="128" loading="lazy"><div><b data-i18n="sellers.f3t">Цена в TRY или USD</b><span data-i18n="sellers.f3d">Указывайте цену в привычной валюте.</span></div></li>
+        <li class="feature reveal" style="--i:3"><img class="f-icon" src="assets/3d/bell.webp" alt="" width="128" height="128" loading="lazy"><div><b data-i18n="sellers.f4t">Заказы на виду</b><span data-i18n="sellers.f4d">Уведомления о новых заказах и понятные статусы.</span></div></li>
+        <li class="feature reveal" style="--i:4"><img class="f-icon" src="assets/3d/chart-up.webp" alt="" width="128" height="128" loading="lazy"><div><b data-i18n="sellers.f5t">Аналитика продаж</b><span data-i18n="sellers.f5d">Статистика за день, неделю, месяц и квартал.</span></div></li>
+        <li class="feature reveal" style="--i:5"><img class="f-icon" src="assets/3d/bank.webp" alt="" width="128" height="128" loading="lazy"><div><b data-i18n="sellers.f6t">Выплаты на счёт</b><span data-i18n="sellers.f6d">Вывод заработанного на ваш банковский счёт.</span></div></li>
+      </ul>
+      <div class="stores reveal">
+        <a class="store store-ios" href="https://apps.apple.com/app/jj-market-seller/id6768510740" target="_blank" rel="noopener" data-track="seller_appstore">
+          <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-apple-logo"/></svg>
+          <span><small data-i18n="store.ios">Загрузите в</small><b>App Store</b></span>
+        </a>
+        <a class="store store-android" href="https://play.google.com/store/apps/details?id=com.jjmarket.seller&amp;pcampaignid=web_share" target="_blank" rel="noopener" data-track="seller_googleplay">
+          <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-google-play-logo"/></svg>
+          <span><small data-i18n="store.android">Доступно в</small><b>Google Play</b></span>
+        </a>
+      </div>
+      <p class="help reveal"><span data-i18n="sellers.help">Нужна помощь с подключением?</span> <a href="https://wa.me/77010275004" target="_blank" rel="noopener" data-track="seller_whatsapp"><span data-i18n="contact.whatsapp">Написать в WhatsApp</span><svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a></p>
+    </div>
+
+    <div class="seller-device reveal">
+      <div class="phone seller-phone">
+        <div class="phone-screen" id="sellerScreens" role="tabpanel" aria-labelledby="stab-0">
+          <img class="screen is-active" src="assets/screens/s-orders.webp" width="750" height="1622" alt="Заказы в JJ Market Seller" data-i18n-alt="sellers.alt1" loading="lazy">
+          <img class="screen" src="assets/screens/s-analytics.webp" width="750" height="1622" alt="Аналитика продаж в JJ Market Seller" data-i18n-alt="sellers.alt2" loading="lazy">
+          <img class="screen" src="assets/screens/s-product.webp" width="750" height="1622" alt="Добавление товара в JJ Market Seller" data-i18n-alt="sellers.alt3" loading="lazy">
+          <img class="screen" src="assets/screens/s-notify.webp" width="750" height="1622" alt="Уведомления о заказах в JJ Market Seller" data-i18n-alt="sellers.alt4" loading="lazy">
+          <div class="status"><span>9:41</span><span class="status-icons"><svg class="i"><use href="assets/icons.svg#i-cell-signal-full"/></svg><svg class="i"><use href="assets/icons.svg#i-wifi-high"/></svg><svg class="i"><use href="assets/icons.svg#i-battery-full"/></svg></span></div>
+        </div>
+        <i class="island"></i><i class="glare"></i>
+      </div>
+      <div class="segmented glass lens" role="tablist" aria-label="JJ Market Seller" id="sellerTabs">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button role="tab" id="stab-0" aria-selected="true" aria-controls="sellerScreens" data-i18n="sellers.tab1">Заказы</button>
+        <button role="tab" id="stab-1" aria-selected="false" aria-controls="sellerScreens" tabindex="-1" data-i18n="sellers.tab2">Аналитика</button>
+        <button role="tab" id="stab-2" aria-selected="false" aria-controls="sellerScreens" tabindex="-1" data-i18n="sellers.tab3">Новый товар</button>
+        <button role="tab" id="stab-3" aria-selected="false" aria-controls="sellerScreens" tabindex="-1" data-i18n="sellers.tab4">Уведомления</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download section" id="download">
+  <div class="download-panel glass reveal">
+    <div class="download-icon"><img src="assets/app/icon-buyer.webp" width="256" height="256" alt="Иконка приложения JJ Market"></div>
+    <h2 class="title" data-i18n="download.title">Скачайте JJ Market.</h2>
+    <p class="lead" data-i18n="download.text">Бесплатно в App Store и Google Play.</p>
+    <div class="stores stores-center">
+      <a class="store store-ios" href="https://apps.apple.com/app/jj-market-kz/id6768357531" target="_blank" rel="noopener" data-track="download_appstore">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-apple-logo"/></svg>
+        <span><small data-i18n="store.ios">Загрузите в</small><b>App Store</b></span>
+      </a>
+      <a class="store store-android" href="https://play.google.com/store/apps/details?id=com.jjmarket.customer&amp;pcampaignid=web_share" target="_blank" rel="noopener" data-track="download_googleplay">
+        <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-google-play-logo"/></svg>
+        <span><small data-i18n="store.android">Доступно в</small><b>Google Play</b></span>
+      </a>
+    </div>
+    <div class="qr-row">
+      <figure class="qr"><img src="assets/app/qr-ios.svg" width="132" height="132" alt="QR-код App Store" loading="lazy"><figcaption><svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-apple-logo"/></svg>iPhone</figcaption></figure>
+      <p class="qr-hint" data-i18n="download.scan">Наведите камеру телефона на код</p>
+      <figure class="qr"><img src="assets/app/qr-android.svg" width="132" height="132" alt="QR-код Google Play" loading="lazy"><figcaption><svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-google-play-logo"/></svg>Android</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ + CONTACT -->
+<section class="faq section" id="faq">
+  <div class="faq-grid">
+    <div class="faq-side">
+      <h2 class="title" data-i18n="contact.title">Остались вопросы?
+Напишите нам.</h2>
+      <p class="lead reveal" data-i18n="contact.text">Ответим в WhatsApp, по телефону или почте.</p>
+      <ul class="contacts">
+        <li class="reveal"><a class="contact contact-wa glass" href="https://wa.me/77010275004" target="_blank" rel="noopener" data-track="contact_whatsapp" data-specular><span class="c-icon"><svg class="i"><use href="assets/icons.svg#i-whatsapp-logo"/></svg></span><span><b data-i18n="contact.whatsapp">Написать в WhatsApp</b><small>+7 701 027 5004</small></span><svg class="i arrow" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a></li>
+        <li class="reveal"><a class="contact glass" href="tel:+77010275004" data-track="contact_phone" data-specular><span class="c-icon"><svg class="i"><use href="assets/icons.svg#i-phone"/></svg></span><span><b data-i18n="contact.call">Позвонить</b><small>+7 701 027 5004</small></span><svg class="i arrow" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a></li>
+        <li class="reveal"><a class="contact glass" href="mailto:support@jjmarket.kz" data-track="contact_email" data-specular><span class="c-icon"><svg class="i"><use href="assets/icons.svg#i-envelope-simple"/></svg></span><span><b data-i18n="contact.mail">Написать на почту</b><small>support@jjmarket.kz</small></span><svg class="i arrow" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a></li>
+        <li class="reveal"><a class="contact glass" href="https://www.instagram.com/jjmarket.kz/" target="_blank" rel="noopener" data-track="contact_instagram" data-specular><span class="c-icon"><svg class="i"><use href="assets/icons.svg#i-instagram-logo"/></svg></span><span><b>Instagram</b><small>@jjmarket.kz</small></span><svg class="i arrow" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a></li>
+      </ul>
+      <p class="hours reveal"><svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-clock"/></svg><span data-i18n="contact.hours">Пн-пт, 09:00-18:00 по времени Астаны</span></p>
+    </div>
+    <div class="faq-list">
+      <h2 class="faq-title title" data-i18n="faq.title">Частые вопросы</h2>
+      <div class="accordion" id="faqList"></div>
+    </div>
+  </div>
+</section>
+
 </main>
-<footer class="footer section"><div class="footer-top"><a href="#top" class="brand"><img src="assets/logo-full-white.png" width="130" height="47" alt="JJ MARKET"></a><span>GLOBAL MARKETPLACE</span><a href="#top" class="back-top"><span data-i18n="motion.backTop">Наверх</span> ↑</a></div><div class="footer-bottom"><span>© 2026 JJ Market</span><a data-link="instagram" href="https://www.instagram.com/jjmarket.kz/">Instagram ↗</a><a href="#faq">FAQ</a><label class="footer-lang"><span class="sr-only" data-i18n="ui.language">Язык</span><select id="footerLang"><option value="ru">Русский</option><option value="tr">Türkçe</option><option value="kk">Қазақша</option><option value="uz">O‘zbekcha</option><option value="ky">Кыргызча</option></select></label></div></footer>
-<div class="mobile-dock" id="mobileDock"><a data-link="appstore" class="button primary" href="https://apps.apple.com/tr/app/jj-market-seller/id6768510740?l=tr"><img src="assets/logo-icon-white.png" width="19" height="24" alt=""><span data-i18n="final.ctaPrimary">Открыть JJ Market</span><svg class="icon"><use href="#arrow-up"/></svg></a><a class="dock-contact" href="#contact"><svg class="icon"><use href="#chat"/></svg><span class="sr-only" data-i18n="nav.contact">Контакты</span></a></div>
-<dialog id="contactDialog"><button class="dialog-close" aria-label="Закрыть" type="button">×</button><svg class="icon"><use href="#chat"/></svg><h2 data-i18n="motion.contactPending">Этот контакт скоро появится</h2><p data-i18n="motion.contactFallback">Пока вы можете связаться с JJ Market в официальном Instagram.</p><a class="button primary" data-link="instagram" href="https://www.instagram.com/jjmarket.kz/"><span data-i18n="instagramBlock.cta">Открыть Instagram</span><svg class="icon"><use href="#arrow-up"/></svg></a></dialog>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}.how-section{height:auto!important}.how-sticky{position:relative!important}</style></noscript>
-</body></html>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="brand footer-brand" href="#top" aria-label="JJ Market">
+      <svg class="brand-symbol" aria-hidden="true"><use href="assets/icons.svg#logo-symbol"/></svg>
+      <svg class="brand-word" aria-hidden="true"><use href="assets/icons.svg#logo-word"/></svg>
+    </a>
+    <nav class="footer-nav" aria-label="Приложения">
+      <a href="https://apps.apple.com/app/jj-market-kz/id6768357531" target="_blank" rel="noopener" data-i18n="footer.buyer">JJ Market для покупателей</a>
+      <a href="https://apps.apple.com/app/jj-market-seller/id6768510740" target="_blank" rel="noopener" data-i18n="footer.seller">JJ Market Seller для продавцов</a>
+      <a href="https://www.instagram.com/jjmarket.kz/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+    <label class="footer-lang">
+      <span class="sr-only" data-i18n="ui.language">Язык</span>
+      <svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-translate"/></svg>
+      <select id="footerLang">
+        <option value="ru">Русский</option><option value="kk">Қазақша</option><option value="tr">Türkçe</option><option value="uz">O‘zbekcha</option><option value="ky">Кыргызча</option>
+      </select>
+    </label>
+    <p class="copy">© <span id="year">2026</span> JJ Market</p>
+  </div>
+</footer>
+
+<div class="dock glass lens" id="dock" data-specular>
+  <a class="dock-main" href="#download" data-smart-download data-track="dock_download">
+    <img src="assets/app/icon-buyer.webp" width="36" height="36" alt="">
+    <span data-i18n="dock.download">Скачать приложение</span>
+  </a>
+  <a class="dock-wa" href="https://wa.me/77010275004" target="_blank" rel="noopener" aria-label="WhatsApp" data-track="dock_whatsapp"><svg class="i" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"/></svg></a>
+</div>
+
+<svg class="lens-defs" aria-hidden="true" width="0" height="0"><defs id="lensDefs"></defs></svg>
+</body>
+</html>
