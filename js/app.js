@@ -241,23 +241,6 @@
   sellerDevice.addEventListener('focusin', () => autoSeller.hold());
   window.addEventListener('resize', () => requestAnimationFrame(placeThumb), { passive: true });
 
-  /* ---------- Hero depth: layers follow the pointer, lerped ---------- */
-  const stage = $('.hero-stage');
-  let tx = 0, ty = 0, cx = 0, cy = 0, heroRaf = 0;
-  function heroFrame() {
-    cx += (tx - cx) * .08; cy += (ty - cy) * .08;
-    stage.style.setProperty('--px', cx.toFixed(4));
-    stage.style.setProperty('--py', cy.toFixed(4));
-    heroRaf = Math.abs(tx - cx) + Math.abs(ty - cy) > .0005 ? requestAnimationFrame(heroFrame) : 0;
-  }
-  $('.hero').addEventListener('pointermove', e => {
-    if (!finePointer.matches || paused) return;
-    tx = clamp(e.clientX / innerWidth - .5, -.5, .5);
-    ty = clamp(e.clientY / innerHeight - .5, -.5, .5);
-    if (!heroRaf) heroRaf = requestAnimationFrame(heroFrame);
-  });
-  $('.hero').addEventListener('pointerleave', () => { tx = 0; ty = 0; if (!heroRaf) heroRaf = requestAnimationFrame(heroFrame); });
-
   /* ---------- Specular highlight follows the pointer on glass ---------- */
   let specEl = null, specX = 0, specY = 0, specRaf = 0;
   document.addEventListener('pointermove', e => {
@@ -340,54 +323,47 @@
     root.classList.add('has-lens');
   }
 
-  /* ---------- Globe: dotted Earth with the Istanbul to Kazakhstan arc ---------- */
+  /* ---------- Globe: Natural Earth dots and the Istanbul to Kazakhstan route ----------
+     Camera flies in, the route draws as a comet, parcels travel it on a loop and Kazakhstan
+     lights up on every arrival. Drag to spin (inertia, then it settles home). */
   const globe = (() => {
-    const canvas = $('#globe'), wrap = $('.globe-wrap');
-    if (!canvas) return { start() {} };
+    const canvas = $('#globe'), wrap = $('.globe-wrap'), DATA = window.JJ_GLOBE;
+    if (!canvas || !DATA) return { start() {} };
     const ctx = canvas.getContext('2d');
-    const from = $('#geoFrom'), to = $('#geoTo');
-    const R = Math.PI / 180;
-    // Coarse continent silhouettes (lon, lat). Dots are spatial texture, not market-presence claims.
-    const continents = [
-      [[-168,66],[-151,71],[-125,71],[-103,79],[-69,77],[-55,55],[-65,44],[-80,26],[-88,18],[-103,22],[-117,33],[-124,48],[-151,59]],
-      [[-82,12],[-69,10],[-51,5],[-35,-7],[-42,-23],[-53,-34],[-70,-56],[-76,-35],[-81,-6]],
-      [[-17,35],[10,37],[34,31],[43,13],[51,11],[42,-13],[33,-29],[19,-35],[10,-18],[-3,3],[-15,10]],
-      [[-10,36],[-10,44],[-2,47],[4,51],[8,58],[20,71],[34,70],[42,55],[40,45],[36,41],[26,40],[24,37],[15,38],[12,44],[3,42]],
-      [[26,40],[36,41],[42,41.5],[47,42],[50,40],[53,37],[60,37],[67,37],[72,40],[80,42],[88,49],[98,52],[110,50],[120,53],[132,47],[141,52],[160,60],[177,65],[180,69],[140,73],[110,77],[80,73],[60,70],[50,68],[40,66],[34,70],[42,55],[40,45]],
-      [[34,31],[36,36],[44,37],[48,30],[56,25],[60,23],[66,25],[72,21],[77,8],[80,15],[88,22],[92,22],[98,16],[100,13],[105,9],[109,12],[108,21],[117,24],[122,31],[121,40],[128,38],[126,34],[130,42],[135,44],[141,45],[138,53],[132,47],[120,53],[110,50],[98,52],[88,49],[80,42],[72,40],[67,37],[60,37],[53,37],[50,40],[47,42],[42,41.5],[44,37],[36,36]],
-      [[34,31],[43,13],[51,11],[57,18],[60,23],[56,25],[52,24],[48,30],[44,37],[36,36]],
-      [[112,-11],[132,-10],[142,-11],[152,-22],[151,-38],[135,-38],[114,-26]],
-      [[-52,59],[-42,60],[-20,78],[-35,84],[-60,79]],
-      [[46,-12],[51,-16],[47,-26],[43,-22]],
-      [[129,31],[143,43],[145,40],[133,30]],
-      [[95,5],[108,-7],[125,-10],[129,-5],[114,0]],
-      [[-6,50],[2,51],[-3,59],[-8,57]]
-    ];
-    const TR = [[26,42],[28.5,41.3],[33,42],[36,41.6],[41,41.4],[44.6,40],[44.6,37.4],[42,37.1],[38,36.8],[36,35.9],[35.4,36.6],[32,36.2],[29,36.4],[27.2,37],[26.2,39],[26.1,40.5]];
-    const KZ = [[46.6,48.5],[49.5,51.3],[54,51.2],[58,51],[61,50.8],[61.2,53.8],[65,54.6],[69,55.4],[73.4,54],[76.7,54.2],[80,51.2],[83,51],[87.3,49.2],[85.6,47],[83,47.2],[80.2,45],[80,42.8],[75,42.9],[71,42.6],[69,41.2],[66,41.8],[62,43.6],[58.5,45.6],[56,45],[55.9,41.3],[53,42.2],[52.8,44.5],[50.3,44.6],[49.2,46.4],[47,46.8]];
-    const inside = (x, y, poly) => { let hit = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) hit = !hit; } return hit; };
+    const from = $('#geoFrom'), to = $('#geoTo'), parcel = $('#parcel');
+    const R = Math.PI / 180, TAU = Math.PI * 2;
     const vec = (lat, lon) => [Math.cos(lat * R) * Math.sin(lon * R), Math.sin(lat * R), Math.cos(lat * R) * Math.cos(lon * R)];
-    const pts = [];
-    for (let lat = -78; lat <= 80; lat += 1.9) {
-      const step = 1.9 / Math.max(.2, Math.cos(lat * R));
-      for (let lon = -180; lon < 180; lon += step) {
-        const hi = inside(lon, lat, TR) ? 2 : inside(lon, lat, KZ) ? 3 : 0;
-        const land = hi || continents.some(p => inside(lon, lat, p)) ? 1 : 0;
-        pts.push({ v: vec(lat, lon), t: hi || land });
+    const easeOut = p => 1 - Math.pow(1 - p, 3);
+
+    const expand = (rows, step, lat0, out) => {
+      for (const row of rows) {
+        const lat = lat0 + row[0] * step, n = Math.max(1, Math.round(360 * Math.cos(lat * R) / step));
+        for (let i = 1; i < row.length; i += 2) for (let k = row[i]; k < row[i + 1]; k++) out.push(vec(lat, -180 + (k + .5) * 360 / n));
       }
-    }
+      return out;
+    };
+    const land = expand(DATA.rows, DATA.s, DATA.lat0, []);
+    const tr = expand(DATA.tr, DATA.fs, DATA.flat0, []);
+    const kz = expand(DATA.kz, DATA.fs, DATA.flat0, []);
+    const grat = [];
+    for (let lon = -180; lon < 180; lon += 20) { const l = []; for (let lat = -80; lat <= 80; lat += 4) l.push(vec(lat, lon)); grat.push(l); }
+    for (let lat = -60; lat <= 60; lat += 20) { const l = []; for (let lon = -180; lon <= 180; lon += 4) l.push(vec(lat, lon)); grat.push(l); }
+    const stars = Array.from({ length: 42 }, () => ({ x: Math.random(), y: Math.random(), p: Math.random() * TAU, s: .6 + Math.random() * 1.1 }));
+
     const A = vec(41.01, 28.98), B = vec(51.17, 71.45);
     const omega = Math.acos(A[0] * B[0] + A[1] * B[1] + A[2] * B[2]);
-    const slerp = s => { const a = Math.sin((1 - s) * omega) / Math.sin(omega), b = Math.sin(s * omega) / Math.sin(omega), lift = 1 + .2 * Math.sin(Math.PI * s); return [(a * A[0] + b * B[0]) * lift, (a * A[1] + b * B[1]) * lift, (a * A[2] + b * B[2]) * lift]; };
-    const arc = Array.from({ length: 81 }, (_, i) => slerp(i / 80));
+    const arc = Array.from({ length: 121 }, (_, i) => {
+      const s = i / 120, a = Math.sin((1 - s) * omega) / Math.sin(omega), b = Math.sin(s * omega) / Math.sin(omega), lift = 1 + .24 * Math.sin(Math.PI * s);
+      return [(a * A[0] + b * B[0]) * lift, (a * A[1] + b * B[1]) * lift, (a * A[2] + b * B[2]) * lift];
+    });
 
-    let w = 0, h = 0, dpr = 1, rad = 0, raf = 0, visible = false, last = 0, clock = 0, started = 0;
+    const HOME = { lon: 50, lat: 39 };
+    let w = 0, h = 0, dpr = 1, rad = 0, raf = 0, visible = false, last = 0, clock = 0;
+    let introAt = 0, arcDoneAt = 0, kzLit = 0, lastS = 0;
     let aimX = 0, aimY = 0, curX = 0, curY = 0;
-    const proj = (v, lon0, lat0) => {
-      const cl = Math.cos(lon0), sl = Math.sin(lon0), ct = Math.cos(lat0), st = Math.sin(lat0);
-      const x = v[0] * cl - v[2] * sl, z = v[0] * sl + v[2] * cl, y = v[1];
-      return [x, y * ct - z * st, y * st + z * ct];
-    };
+    let dragLon = 0, dragLat = 0, vLon = 0, vLat = 0, dragging = false, releasedAt = 0;
+    const ripples = [];
+
     function size() {
       const r = canvas.getBoundingClientRect();
       w = r.width; h = r.height; dpr = Math.min(devicePixelRatio || 1, 2);
@@ -395,89 +371,203 @@
       rad = Math.min(w, h) * .4;
       draw(performance.now());
     }
-    const buckets = Array.from({ length: 16 }, () => []);
+    function view(now) {
+      const p = introAt ? (reduced.matches ? 1 : easeOut(Math.min(1, (now - introAt) / 2100))) : 0;
+      return {
+        lon: (HOME.lon - 80 * (1 - p) + Math.sin(clock * .00016) * 4 + curX * 12 + dragLon) * R,
+        lat: (HOME.lat - 16 * (1 - p) + curY * 7 + dragLat) * R,
+        zoom: .8 + .2 * p, intro: p
+      };
+    }
+    const project = (v, cl, sl, ct, st) => {
+      const x = v[0] * cl - v[2] * sl, z = v[0] * sl + v[2] * cl, y = v[1];
+      return [x, y * ct - z * st, y * st + z * ct];
+    };
+
     function draw(now) {
       if (!w) return;
-      curX += (aimX - curX) * .05; curY += (aimY - curY) * .05;
-      const lon0 = (52 + Math.sin(clock * .00018) * 5 + curX * 14) * R;
-      const lat0 = (34 + curY * 8) * R;
-      const c = ctx, cxp = w / 2, cyp = h / 2;
+      const c = ctx, cx = w / 2, cy = h / 2;
+      const V = view(now), r = rad * V.zoom;
+      const cl = Math.cos(V.lon), sl = Math.sin(V.lon), ct = Math.cos(V.lat), st = Math.sin(V.lat);
       c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
-      const atm = c.createRadialGradient(cxp, cyp, rad * .9, cxp, cyp, rad * 1.28);
-      atm.addColorStop(0, 'rgba(174,51,255,.35)'); atm.addColorStop(1, 'rgba(174,51,255,0)');
-      c.fillStyle = atm; c.beginPath(); c.arc(cxp, cyp, rad * 1.28, 0, Math.PI * 2); c.fill();
-      const body = c.createRadialGradient(cxp - rad * .35, cyp - rad * .4, rad * .1, cxp, cyp, rad);
-      body.addColorStop(0, '#3a1660'); body.addColorStop(.7, '#1b0b2c'); body.addColorStop(1, '#12081d');
-      c.fillStyle = body; c.beginPath(); c.arc(cxp, cyp, rad, 0, Math.PI * 2); c.fill();
-      buckets.forEach(b => (b.length = 0));
-      for (const p of pts) {
-        const q = proj(p.v, lon0, lat0);
-        if (q[2] < 0) continue;
-        const depth = Math.min(3, (q[2] * 4) | 0);
-        buckets[p.t * 4 + depth].push(cxp + q[0] * rad, cyp - q[1] * rad);
+
+      // Stars twinkle around the planet.
+      for (const s of stars) {
+        const a = .15 + .45 * (.5 + .5 * Math.sin(clock * .0018 + s.p));
+        c.fillStyle = `rgba(231,205,255,${(a * V.intro).toFixed(3)})`;
+        c.fillRect(s.x * w, s.y * h, s.s, s.s);
       }
-      const styles = [
-        d => [`rgba(190,140,255,${.04 + d * .03})`, .9],
-        d => [`rgba(214,178,255,${.25 + d * .17})`, 1.5],
-        d => [`rgba(255,255,255,${.55 + d * .15})`, 2.1],
-        d => [`rgba(255,255,255,${.55 + d * .15})`, 2.1]
-      ];
-      for (let t = 0; t < 4; t++) for (let d = 0; d < 4; d++) {
-        const arr = buckets[t * 4 + d]; if (!arr.length) continue;
-        const [col, s] = styles[t](d); c.fillStyle = col; c.beginPath();
+      // Atmosphere.
+      const atm = c.createRadialGradient(cx, cy, r * .92, cx, cy, r * 1.32);
+      atm.addColorStop(0, 'rgba(174,51,255,.42)'); atm.addColorStop(.45, 'rgba(174,51,255,.12)'); atm.addColorStop(1, 'rgba(174,51,255,0)');
+      c.fillStyle = atm; c.beginPath(); c.arc(cx, cy, r * 1.32, 0, TAU); c.fill();
+
+      // Orbit ring, back half (behind the sphere).
+      const orbit = (front) => {
+        c.save(); c.translate(cx, cy); c.rotate(-.32); c.scale(1, .26);
+        c.strokeStyle = `rgba(214,170,255,${front ? .32 : .12})`; c.lineWidth = 1.2 / .26 * .3; c.setLineDash([2, 7]);
+        c.beginPath(); c.arc(0, 0, r * 1.2, front ? 0 : Math.PI, front ? Math.PI : TAU); c.stroke(); c.setLineDash([]);
+        const g = (clock * .00022) % TAU, gy = Math.sin(g);
+        if ((gy > 0) === front) { c.fillStyle = 'rgba(255,255,255,.9)'; c.beginPath(); c.arc(Math.cos(g) * r * 1.2, gy * r * 1.2, 5, 0, TAU); c.fill(); }
+        c.restore();
+      };
+      orbit(false);
+
+      // Sphere body + night side.
+      const body = c.createRadialGradient(cx - r * .35, cy - r * .42, r * .08, cx, cy, r);
+      body.addColorStop(0, '#41186b'); body.addColorStop(.62, '#1c0b2e'); body.addColorStop(1, '#10071a');
+      c.fillStyle = body; c.beginPath(); c.arc(cx, cy, r, 0, TAU); c.fill();
+
+      // Graticule.
+      c.strokeStyle = 'rgba(214,170,255,.07)'; c.lineWidth = 1;
+      for (const line of grat) {
+        c.beginPath(); let pen = false;
+        for (const v of line) { const q = project(v, cl, sl, ct, st); if (q[2] < 0) { pen = false; continue; } const X = cx + q[0] * r, Y = cy - q[1] * r; pen ? c.lineTo(X, Y) : c.moveTo(X, Y); pen = true; }
+        c.stroke();
+      }
+
+      // Land dots, bucketed by depth so one fill per alpha level.
+      const lvl = [[], [], [], []];
+      for (const v of land) { const q = project(v, cl, sl, ct, st); if (q[2] < .02) continue; lvl[Math.min(3, (q[2] * 4) | 0)].push(cx + q[0] * r, cy - q[1] * r); }
+      lvl.forEach((arr, d) => {
+        const s = 1.15 + d * .22; c.fillStyle = `rgba(205,168,255,${(.16 + d * .16).toFixed(2)})`; c.beginPath();
         for (let i = 0; i < arr.length; i += 2) c.rect(arr[i] - s / 2, arr[i + 1] - s / 2, s, s);
         c.fill();
-      }
-      // Arc draws in once, then a parcel of light travels it on a loop.
-      const prog = started ? Math.min(1, (now - started) / 2200) : 0;
-      const ease = 1 - Math.pow(1 - prog, 3);
-      const P = arc.map(v => { const q = proj(v, lon0, lat0); return [cxp + q[0] * rad, cyp - q[1] * rad, q[2]]; });
-      const n = Math.max(1, Math.round(ease * (P.length - 1)));
-      c.lineCap = 'round';
-      c.lineWidth = 2.4;
-      const g = c.createLinearGradient(P[0][0], P[0][1], P[P.length - 1][0], P[P.length - 1][1]);
-      g.addColorStop(0, '#E7C8FF'); g.addColorStop(1, '#AE33FF');
-      c.strokeStyle = g; c.shadowColor = 'rgba(174,51,255,.9)'; c.shadowBlur = 12;
-      c.beginPath(); c.moveTo(P[0][0], P[0][1]); for (let i = 1; i <= n; i++) c.lineTo(P[i][0], P[i][1]); c.stroke();
-      c.shadowBlur = 0;
-      [P[0], P[P.length - 1]].forEach((e, k) => {
-        if (k === 1 && prog < 1) return;
-        const pulse = (clock * .0012 + k * .5) % 1;
-        c.strokeStyle = `rgba(231,200,255,${(1 - pulse) * .8})`; c.lineWidth = 1.5;
-        c.beginPath(); c.arc(e[0], e[1], 5 + pulse * 16, 0, Math.PI * 2); c.stroke();
-        c.fillStyle = '#fff'; c.beginPath(); c.arc(e[0], e[1], 4, 0, Math.PI * 2); c.fill();
       });
-      if (prog >= 1 && !paused) {
-        const s = (clock % 2800) / 2800, idx = s * (P.length - 1), i0 = Math.floor(idx), f = idx - i0, i1 = Math.min(P.length - 1, i0 + 1);
-        const x = P[i0][0] + (P[i1][0] - P[i0][0]) * f, y = P[i0][1] + (P[i1][1] - P[i0][1]) * f;
-        const glow = c.createRadialGradient(x, y, 0, x, y, 16);
-        glow.addColorStop(0, 'rgba(255,255,255,.95)'); glow.addColorStop(.35, 'rgba(214,170,255,.6)'); glow.addColorStop(1, 'rgba(174,51,255,0)');
-        c.fillStyle = glow; c.beginPath(); c.arc(x, y, 16, 0, Math.PI * 2); c.fill();
+      const country = (pts, col, s) => {
+        c.fillStyle = col; c.beginPath();
+        for (const v of pts) { const q = project(v, cl, sl, ct, st); if (q[2] < .02) continue; c.rect(cx + q[0] * r - s / 2, cy - q[1] * r - s / 2, s, s); }
+        c.fill();
+      };
+      country(tr, 'rgba(255,255,255,.95)', 1.5);
+      const glow = Math.max(0, ...ripples.map(p => 1 - (now - p) / 900));
+      country(kz, `rgba(${Math.round(214 + 41 * kzLit)},${Math.round(178 + 77 * kzLit)},255,${(.45 + .5 * kzLit).toFixed(2)})`, 1.4 + .3 * kzLit);
+
+      // Glass sphere: specular bloom and rim light.
+      const spec = c.createRadialGradient(cx - r * .42, cy - r * .5, 0, cx - r * .42, cy - r * .5, r * .75);
+      spec.addColorStop(0, 'rgba(255,255,255,.13)'); spec.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = spec; c.beginPath(); c.arc(cx, cy, r, 0, TAU); c.fill();
+      const rim = c.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+      rim.addColorStop(0, 'rgba(236,214,255,.55)'); rim.addColorStop(.5, 'rgba(174,51,255,.12)'); rim.addColorStop(1, 'rgba(174,51,255,.35)');
+      c.strokeStyle = rim; c.lineWidth = 1.4; c.beginPath(); c.arc(cx, cy, r - .7, 0, TAU); c.stroke();
+
+      // Route.
+      const P = arc.map(v => { const q = project(v, cl, sl, ct, st); return [cx + q[0] * r, cy - q[1] * r, q[2]]; });
+      const arcStart = introAt + (reduced.matches ? -9999 : 1250);
+      const prog = introAt ? Math.min(1, Math.max(0, (now - arcStart) / 1500)) : 0;
+      if (prog >= 1 && !arcDoneAt) arcDoneAt = now;
+      kzLit = arcDoneAt ? Math.min(1, (now - arcDoneAt) / 700) : 0;
+      const n = Math.round(easeOut(prog) * (P.length - 1));
+      if (n > 0) {
+        c.lineCap = 'round';
+        const g = c.createLinearGradient(P[0][0], P[0][1], P[P.length - 1][0], P[P.length - 1][1]);
+        g.addColorStop(0, 'rgba(255,255,255,.95)'); g.addColorStop(1, 'rgba(199,125,255,.95)');
+        const path = () => { c.beginPath(); let pen = false; for (let i = 0; i <= n; i++) { if (P[i][2] < -.04) { pen = false; continue; } pen ? c.lineTo(P[i][0], P[i][1]) : c.moveTo(P[i][0], P[i][1]); pen = true; } };
+        c.strokeStyle = 'rgba(174,51,255,.35)'; c.lineWidth = 7; path(); c.stroke();
+        c.strokeStyle = g; c.lineWidth = 2.2; path(); c.stroke();
+        if (prog < 1 && P[n][2] > -.04) comet(P[n][0], P[n][1], 22);
       }
+      // Origin pulse, and arrival ripples at Kazakhstan.
+      const pulse = (clock * .0011) % 1;
+      const fromVis = P[0][2] > .02, toVis = P[P.length - 1][2] > .02;
+      if (introAt && fromVis) ring(P[0], 5 + pulse * 18, (1 - pulse) * .8);
+      if (fromVis) dot(P[0], 4.2);
+      if (arcDoneAt && toVis) {
+        dot(P[P.length - 1], 4.2 + glow * 2);
+        for (let i = ripples.length - 1; i >= 0; i--) { const p = (now - ripples[i]) / 1100; if (p >= 1) { ripples.splice(i, 1); continue; } ring(P[P.length - 1], 6 + p * 34, (1 - p) * .9); }
+      }
+
+      // Parcels travel the route on a loop once it is drawn.
+      let lead = null;
+      if (arcDoneAt && !paused && !reduced.matches) {
+        const period = 3200;
+        for (let k = 0; k < 3; k++) {
+          const s = (((now - arcDoneAt) / period) + k / 3) % 1;
+          const hp = pointAt(P, s);
+          if (hp[2] < -.04) { if (k === 0) { lead = null; lastS = s; } continue; }
+          trail(P, s, .16);
+          comet(hp[0], hp[1], 13);
+          if (k === 0) { lead = { p: hp, s }; if (s < lastS) ripples.push(now); lastS = s; }
+        }
+      }
+      if (parcel) {
+        if (lead) {
+          const lift = Math.sin(Math.PI * lead.s), fade = Math.min(1, Math.sin(Math.PI * lead.s) * 3);
+          parcel.style.transform = `translate(${lead.p[0].toFixed(1)}px,${lead.p[1].toFixed(1)}px) translate(-50%,-120%) scale(${(.75 + .45 * lift).toFixed(3)}) rotate(${(-10 + 20 * lead.s).toFixed(1)}deg)`;
+          parcel.style.opacity = fade.toFixed(3);
+        } else parcel.style.opacity = '0';
+      }
+
       const place = (el, p) => { el.style.left = (p[0] / w * 100).toFixed(2) + '%'; el.style.top = (p[1] / h * 100).toFixed(2) + '%'; };
       place(from, P[0]); place(to, P[P.length - 1]);
-      from.classList.toggle('is-on', started > 0);
-      to.classList.toggle('is-on', prog >= 1);
+      from.classList.toggle('is-on', prog > 0);
+      to.classList.toggle('is-on', arcDoneAt > 0);
+      from.classList.toggle('is-back', !fromVis);
+      to.classList.toggle('is-back', !toVis);
     }
+    function pointAt(P, s) { const idx = s * (P.length - 1), i0 = Math.floor(idx), f = idx - i0, i1 = Math.min(P.length - 1, i0 + 1); return [P[i0][0] + (P[i1][0] - P[i0][0]) * f, P[i0][1] + (P[i1][1] - P[i0][1]) * f, P[i0][2] + (P[i1][2] - P[i0][2]) * f]; }
+    function trail(P, s, len) {
+      const a = Math.max(0, s - len), steps = 14;
+      for (let i = 0; i < steps; i++) {
+        const t0 = a + (s - a) * i / steps, t1 = a + (s - a) * (i + 1) / steps, p0 = pointAt(P, t0), p1 = pointAt(P, t1);
+        ctx.strokeStyle = `rgba(255,255,255,${((i + 1) / steps * .85).toFixed(3)})`; ctx.lineWidth = 1 + (i + 1) / steps * 2.2;
+        ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
+      }
+    }
+    function comet(x, y, size) {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, size);
+      g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.3, 'rgba(225,190,255,.75)'); g.addColorStop(1, 'rgba(174,51,255,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, size, 0, TAU); ctx.fill();
+    }
+    function ring(p, radius, alpha) { ctx.strokeStyle = `rgba(231,200,255,${alpha.toFixed(3)})`; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p[0], p[1], radius, 0, TAU); ctx.stroke(); }
+    function dot(p, radius) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p[0], p[1], radius, 0, TAU); ctx.fill(); }
+
+    function physics() {
+      if (dragging) return;
+      if (Math.abs(vLon) + Math.abs(vLat) > .002) { dragLon += vLon * 16; dragLat = clamp(dragLat + vLat * 16, -30, 30); vLon *= .93; vLat *= .93; }
+      else if (performance.now() - releasedAt > 900) { dragLon += (0 - dragLon) * .045; dragLat += (0 - dragLat) * .045; }
+      curX += (aimX - curX) * .05; curY += (aimY - curY) * .05;
+    }
+    const busy = () => dragging || Math.abs(dragLon) + Math.abs(dragLat) > .05 || (introAt && performance.now() - introAt < 4200);
     function frame(now) {
       raf = 0;
       if (!visible || document.hidden) { last = 0; return; }
-      if (now - last >= 30) { clock += last ? Math.min(now - last, 60) : 30; last = now; draw(now); }
-      if (!paused || (started && now - started < 2400)) raf = requestAnimationFrame(frame);
+      const gap = finePointer.matches ? 15 : 30;
+      if (now - last >= gap) { clock += last ? Math.min(now - last, 60) : gap; last = now; physics(); draw(now); }
+      if (!paused || busy()) raf = requestAnimationFrame(frame);
     }
     const api = { start() { if (!raf && visible) raf = requestAnimationFrame(frame); } };
     new ResizeObserver(size).observe(canvas);
     new IntersectionObserver(([en]) => {
       visible = en.isIntersecting;
-      if (visible && !started) started = performance.now() + (reduced.matches ? -5000 : 250);
+      if (visible && !introAt) introAt = performance.now();
       if (visible) api.start();
-    }, { threshold: .25 }).observe(canvas);
+    }, { threshold: .3 }).observe(canvas);
     document.addEventListener('visibilitychange', () => { last = 0; api.start(); });
-    wrap.addEventListener('pointermove', e => {
-      if (!finePointer.matches) return;
-      const r = wrap.getBoundingClientRect();
-      aimX = (e.clientX - r.left) / r.width - .5; aimY = (e.clientY - r.top) / r.height - .5;
+
+    // Direct manipulation: horizontal drag spins the globe, vertical scroll stays with the page.
+    let px = 0, py = 0, pt = 0;
+    wrap.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return;
+      dragging = true; px = e.clientX; py = e.clientY; pt = performance.now(); vLon = vLat = 0;
+      wrap.setPointerCapture(e.pointerId); wrap.classList.add('is-dragging'); api.start();
     });
+    wrap.addEventListener('pointermove', e => {
+      if (!dragging) {
+        if (!finePointer.matches) return;
+        const r = wrap.getBoundingClientRect();
+        aimX = (e.clientX - r.left) / r.width - .5; aimY = (e.clientY - r.top) / r.height - .5;
+        return;
+      }
+      const now = performance.now(), dt = Math.max(8, now - pt), k = 140 / Math.max(200, rad * 2);
+      const dl = (e.clientX - px) * k * -1, dv = (e.clientY - py) * k;
+      dragLon += dl; dragLat = clamp(dragLat + dv, -30, 30);
+      vLon = dl / dt; vLat = dv / dt; px = e.clientX; py = e.clientY; pt = now;
+      if (paused) draw(now);
+    });
+    const release = () => { if (!dragging) return; dragging = false; releasedAt = performance.now(); wrap.classList.remove('is-dragging'); api.start(); };
+    wrap.addEventListener('pointerup', release);
+    wrap.addEventListener('pointercancel', release);
     wrap.addEventListener('pointerleave', () => { aimX = 0; aimY = 0; });
     return api;
   })();

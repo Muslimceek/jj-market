@@ -21,11 +21,14 @@
 <link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/montserrat-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/nunito-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/screens/b-home.webp" as="image" fetchpriority="high">
-<link rel="stylesheet" href="css/styles.css?v=2026101504">
+<link rel="preload" href="assets/video/hero-desktop.webp" as="image" media="(min-width: 901px)" fetchpriority="high">
+<link rel="preload" href="assets/video/hero-mobile.webp" as="image" media="(max-width: 900px)" fetchpriority="high">
+<link rel="stylesheet" href="css/styles.css?v=2026101517">
 <script>document.documentElement.classList.add('js')</script>
-<script src="js/i18n.js?v=2026101504" defer></script>
-<script src="js/app.js?v=2026101504" defer></script>
+<script src="js/i18n.js?v=2026101510" defer></script>
+<script src="js/globe-data.js?v=2026101510" defer></script>
+<script src="js/app.js?v=2026101510" defer></script>
+<script src="js/hero-video.js?v=2026101510" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","name":"JJ Market","email":"support@jjmarket.kz","telephone":"+7 701 027 5004","sameAs":["https://www.instagram.com/jjmarket.kz/"],"contactPoint":{"@type":"ContactPoint","telephone":"+7 701 027 5004","contactType":"customer support","availableLanguage":["ru","kk","tr","en"],"hoursAvailable":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}}},
@@ -100,54 +103,24 @@
     </div>
   </div>
 
-  <div class="hero-stage" aria-hidden="true">
-    <div class="stage-glow"></div>
-    <div class="depth" style="--z:1.6"><img class="obj obj-bags pop" style="--d:6" src="assets/3d/shopping-bags.webp" alt="" width="192" height="192"></div>
-    <div class="depth" style="--z:1.2"><img class="obj obj-box pop" style="--d:8" src="assets/3d/package.webp" alt="" width="192" height="192"></div>
-    <div class="depth" style="--z:2"><img class="obj obj-mosque pop" style="--d:7" src="assets/3d/mosque.webp" alt="" width="192" height="192"></div>
-
-    <div class="depth phone-depth" style="--z:.6">
-      <div class="phone-tilt">
-        <div class="phone hero-phone rise">
-          <div class="phone-screen">
-            <img src="assets/screens/b-home.webp" width="750" height="1622" alt="" fetchpriority="high">
-            <div class="status"><span>9:41</span><span class="status-icons"><svg class="i"><use href="assets/icons.svg#i-cell-signal-full"/></svg><svg class="i"><use href="assets/icons.svg#i-wifi-high"/></svg><svg class="i"><use href="assets/icons.svg#i-battery-full"/></svg></span></div>
-          </div>
-          <i class="island"></i><i class="glare"></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="depth" style="--z:1.4">
-      <div class="float-card card-product glass lens materialize" style="--d:9" data-specular>
-        <img src="assets/photo-loafers-thumb.webp" width="240" height="232" alt="">
-        <div>
-          <b>Лоферы</b>
-          <small>missmamma</small>
-          <strong>15 467 ₸</strong>
-          <em class="stock" data-i18n="hero.instock">В наличии</em>
-        </div>
-        <span class="heart"><svg class="i"><use href="assets/icons.svg#i-heart"/></svg></span>
-      </div>
-    </div>
-    <div class="depth" style="--z:1.8">
-      <div class="float-card card-pay glass lens materialize" style="--d:11" data-specular>
-        <span class="tile"><svg class="i"><use href="assets/icons.svg#i-credit-card"/></svg></span>
-        <span data-i18n="hero.kaspi">Оплата через Kaspi Pay</span>
-        <svg class="i check"><use href="assets/icons.svg#i-check"/></svg>
-      </div>
-    </div>
-    <div class="depth" style="--z:1.1">
-      <div class="float-card card-route glass lens materialize" style="--d:12" data-specular>
-        <svg class="mini-route" viewBox="0 0 200 60"><path class="mr-base" d="M10 48 C 60 4, 140 4, 190 48"/><path class="mr-draw" d="M10 48 C 60 4, 140 4, 190 48" pathLength="1"/><circle cx="10" cy="48" r="4"/><circle cx="190" cy="48" r="4"/></svg>
-        <span class="mini-plane"><svg class="i"><use href="assets/icons.svg#i-airplane-tilt"/></svg></span>
-        <span class="route-label" data-i18n="hero.route">Стамбул → Казахстан</span>
-      </div>
-    </div>
-    <div class="depth" style="--z:2.2">
-      <div class="app-icon materialize" style="--d:10"><img src="assets/app/icon-buyer.webp" width="256" height="256" alt=""></div>
+  <div class="hero-film" aria-hidden="true">
+    <div class="hero-film-screen">
+    <picture class="hero-film-poster">
+      <source media="(max-width: 900px)" srcset="assets/video/hero-mobile.webp" width="1080" height="1920">
+      <img src="assets/video/hero-desktop.webp" width="1920" height="1080" alt="" fetchpriority="high">
+    </picture>
+    <video id="heroVideo" class="hero-video" muted loop playsinline preload="none" tabindex="-1"
+      poster="assets/video/hero-desktop.webp"
+      data-desktop-src="assets/video/hero-desktop.mp4"
+      data-mobile-src="assets/video/hero-mobile.mp4"
+      data-desktop-poster="assets/video/hero-desktop.webp"
+      data-mobile-poster="assets/video/hero-mobile.webp"></video>
     </div>
   </div>
+  <button class="hero-motion-toggle motion-toggle glass" type="button" id="heroMotionToggle" aria-label="Остановить анимацию" aria-pressed="false" aria-controls="heroVideo">
+    <svg class="i i-pause" aria-hidden="true"><use href="assets/icons.svg#i-pause"/></svg>
+    <svg class="i i-play" aria-hidden="true"><use href="assets/icons.svg#i-play"/></svg>
+  </button>
 </section>
 
 <!-- CATEGORIES MARQUEE (the page's only marquee) -->
@@ -178,42 +151,37 @@
   </div>
   <div class="how-grid">
     <div class="how-device" aria-hidden="true">
-      <div class="phone how-phone">
-        <div class="phone-screen" id="howScreens">
-          <img class="screen is-active" src="assets/screens/b-home.webp" width="750" height="1622" alt="" loading="lazy">
-          <img class="screen" src="assets/screens/b-product.webp" width="750" height="1622" alt="" loading="lazy" data-status="light">
-          <img class="screen" src="assets/screens/b-cart.webp" width="750" height="1622" alt="" loading="lazy">
-          <img class="screen" src="assets/screens/b-kaspi.webp" width="750" height="1622" alt="" loading="lazy" data-status="light">
-          <div class="status"><span>9:41</span><span class="status-icons"><svg class="i"><use href="assets/icons.svg#i-cell-signal-full"/></svg><svg class="i"><use href="assets/icons.svg#i-wifi-high"/></svg><svg class="i"><use href="assets/icons.svg#i-battery-full"/></svg></span></div>
-        </div>
-        <i class="island"></i><i class="glare"></i>
+      <div class="how-mockup" id="howScreens">
+        <img class="screen is-active" src="assets/mockups/how-find.webp" width="1448" height="1086" alt="" loading="lazy">
+        <img class="screen" src="assets/mockups/how-product.webp" width="1448" height="1086" alt="" loading="lazy">
+        <img class="screen" src="assets/mockups/how-cart.webp" width="1448" height="1086" alt="" loading="lazy">
+        <img class="screen" src="assets/mockups/how-kaspi.webp" width="1448" height="1086" alt="" loading="lazy">
       </div>
-      <div class="how-orbit"></div>
     </div>
     <ol class="steps" id="steps">
       <li class="step glass" data-step="0" data-specular>
         <span class="step-icon"><img src="assets/3d/search.webp" alt="" width="128" height="128" loading="lazy"></span>
         <h3 data-i18n="how.s1t">Найдите</h3>
         <p data-i18n="how.s1d">Каталог турецких магазинов, поиск по названию или артикулу и удобные фильтры.</p>
-        <img class="step-shot" src="assets/screens/b-home.webp" width="750" height="1622" alt="Экран каталога JJ Market" data-i18n-alt="how.alt1" loading="lazy">
+        <img class="step-shot" src="assets/mockups/how-find.webp" width="1448" height="1086" alt="Экран каталога JJ Market" data-i18n-alt="how.alt1" loading="lazy">
       </li>
       <li class="step glass" data-step="1" data-specular>
         <span class="step-icon"><img src="assets/3d/cart.webp" alt="" width="128" height="128" loading="lazy"></span>
         <h3 data-i18n="how.s2t">Добавьте в корзину</h3>
         <p data-i18n="how.s2d">Фото, цена в тенге и наличие на одном экране. Выберите количество и добавьте.</p>
-        <img class="step-shot" style="object-position:50% 100%" src="assets/screens/b-product.webp" width="750" height="1622" alt="Добавление товара в корзину" data-i18n-alt="how.alt2" loading="lazy">
+        <img class="step-shot" src="assets/mockups/how-product.webp" width="1448" height="1086" alt="Добавление товара в корзину" data-i18n-alt="how.alt2" loading="lazy">
       </li>
       <li class="step glass" data-step="2" data-specular>
         <span class="step-icon"><img src="assets/3d/house.webp" alt="" width="128" height="128" loading="lazy"></span>
         <h3 data-i18n="how.s3t">Оформите заказ</h3>
         <p data-i18n="how.s3d">Укажите адрес доставки в Казахстане и проверьте итоговую сумму.</p>
-        <img class="step-shot" src="assets/screens/b-cart.webp" width="750" height="1622" alt="Корзина с оплатой Kaspi Pay" data-i18n-alt="how.alt3" loading="lazy">
+        <img class="step-shot" src="assets/mockups/how-cart.webp" width="1448" height="1086" alt="Корзина с оплатой Kaspi Pay" data-i18n-alt="how.alt3" loading="lazy">
       </li>
       <li class="step glass" data-step="3" data-specular>
         <span class="step-icon"><img src="assets/3d/credit-card.webp" alt="" width="128" height="128" loading="lazy"></span>
         <h3 data-i18n="how.s4t">Оплатите в Kaspi</h3>
         <p data-i18n="how.s4d">Подтвердите оплату в приложении Kaspi, и заказ подтвердится автоматически.</p>
-        <img class="step-shot" style="object-position:50% 78%" src="assets/screens/b-kaspi.webp" width="750" height="1622" alt="Оплата заказа через Kaspi Pay" data-i18n-alt="how.alt4" loading="lazy">
+        <img class="step-shot" src="assets/mockups/how-kaspi.webp" width="1448" height="1086" alt="Оплата заказа через Kaspi Pay" data-i18n-alt="how.alt4" loading="lazy">
       </li>
     </ol>
   </div>
@@ -280,6 +248,7 @@
     </div>
     <div class="globe-wrap" aria-hidden="true">
       <canvas id="globe"></canvas>
+      <img class="parcel" id="parcel" src="assets/3d/package.webp" alt="" width="192" height="192" loading="lazy">
       <span class="geo geo-from glass" id="geoFrom"><img src="assets/3d/mosque.webp" alt="" width="36" height="36" loading="lazy"><span data-i18n="route.from">Стамбул</span></span>
       <span class="geo geo-to glass" id="geoTo"><img src="assets/3d/pin.webp" alt="" width="36" height="36" loading="lazy"><span data-i18n="route.to">Казахстан</span></span>
     </div>
